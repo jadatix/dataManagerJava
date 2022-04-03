@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.AdminController">
+   <children>
+      <Label fx:id="AdminHeader" layoutX="39.0" layoutY="32.0" prefHeight="38.0" prefWidth="241.0" text="Адміністративна панель">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="TeacherEditBtn" layoutX="98.0" layoutY="105.0" mnemonicParsing="false" onAction="#adminChangeTeacher" prefHeight="38.0" prefWidth="252.0" text="Редагування викладачів">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="StudentEditBtn" layoutX="98.0" layoutY="162.0" mnemonicParsing="false" onAction="#adminChangeStudent" prefHeight="38.0" prefWidth="252.0" text="Редагування студентів">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="ExitBtn" layoutX="98.0" layoutY="266.0" mnemonicParsing="false" onAction="#exit" prefHeight="38.0" prefWidth="84.0" text="Вийти" textFill="#fc0a0a">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
