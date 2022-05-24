@@ -1,14 +1,15 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Teacher extends Person {
 
-    private List<String> subject;
+    private List<String> subject =new ArrayList<>();
     private String headOf;
 
-    Teacher(){super(); subject.add("");}
-    Teacher(String name, String lastname, String email, String gender, int age,String password, List<String> subject,String headOf){
+    public Teacher(){super(); subject.add("");}
+    public Teacher(String name, String lastname, String email, String gender, int age, String password, List<String> subject, String headOf){
         super(name, lastname, email, gender, age,password);
         this.subject.addAll(subject);
         this.headOf=headOf;

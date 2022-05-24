@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.TeacherCRUDController">
    <children>
       <Label layoutX="47.0" layoutY="24.0" prefHeight="34.0" prefWidth="246.0" text="Додати викладача">
          <font>
@@ -25,8 +27,38 @@
       <PasswordField fx:id="passwordPField" layoutX="231.0" layoutY="164.0" prefHeight="24.0" prefWidth="200.0" />
       <TextField fx:id="headOfTextField" layoutX="231.0" layoutY="194.0" prefHeight="24.0" prefWidth="200.0" />
       <TextField fx:id="genderTextField" layoutX="231.0" layoutY="254.0" prefHeight="24.0" prefWidth="119.0" />
-      <TextArea fx:id="subjectTextArea" layoutX="231.0" layoutY="289.0" prefHeight="80.0" prefWidth="252.0" wrapText="true" />
       <TextField fx:id="ageTextField" layoutX="231.0" layoutY="224.0" prefHeight="24.0" prefWidth="119.0" />
-      <Button fx:id="addNewTeacherBtn" layoutX="70.0" layoutY="329.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="76.0" text="Додати" textFill="#46b207" />
+      <Button fx:id="addNewTeacherBtn" layoutX="70.0" layoutY="329.0" mnemonicParsing="false" onAction="#addNewTeacher" prefHeight="24.0" prefWidth="76.0" text="Додати" textFill="#46b207" />
+      <TextField fx:id="subjectTextField" layoutX="231.0" layoutY="284.0" prefHeight="24.0" prefWidth="200.0" />
+      <Button fx:id="newSubjectButton" layoutX="442.0" layoutY="284.0" mnemonicParsing="false" onAction="#subjectHandler" text="+" textAlignment="CENTER">
+         <textFill>
+            <RadialGradient centerX="0.48314606741573035" centerY="0.5576923076923077" radius="0.75">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.527863085269928" green="0.9736841917037964" blue="0.39217835664749146" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.3190058469772339" green="0.4736842215061188" blue="0.2719298303127289" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="subjectStatus" layoutX="184.0" layoutY="284.0" prefHeight="24.0" prefWidth="36.0" text="0" textAlignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="WAIT" />
+         </cursor></Label>
+      <Button fx:id="deleteSubjectBtn" layoutX="483.0" layoutY="284.0" mnemonicParsing="false" onAction="#subjectDeleteOne" text="🗑" textAlignment="CENTER" textFill="#f51f1f">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

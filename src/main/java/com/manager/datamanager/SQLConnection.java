@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.stream.Collectors;
 
 public class SQLConnection {
     public void testing(String[] args) {
         try {
             Connection connection;
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/shop", "postgres", "");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datamanager", "postgres", "");
             if (connection != null) {
                 System.out.println("Connection: we did it :)");
             } else {
@@ -38,7 +39,7 @@ public class SQLConnection {
         try{
             Connection connection;
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/shop", "postgres", "");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datamanager", "postgres", "");
             if (connection != null) {
                 System.out.println("Connection: we did it :)");
             } else {
@@ -47,16 +48,16 @@ public class SQLConnection {
             }
 
             Statement  statement = connection.createStatement();
-            ResultSet res = statement.executeQuery("INSERT INTO Teacher(id,name,lastname,email,password,gender,age,headOf,subject)" +
-                    "VALUES (NULL,"+teacher.getName()+
-                    ","+teacher.getLastname()+
-                    ","+teacher.getEmail()+
-                    ","+teacher.getPassword()+
-                    ","+teacher.getGender()+
-                    ","+teacher.getAge()+
-                    ","+teacher.getHeadOf()+
-                    ","+teacher.getSubject().stream().map(el -> el+" ")+
-                    ")");// TODO: subject find out how to deal with (create test)
+            statement.executeUpdate("INSERT INTO Teacher(id,name,lastname,email,password,gender,age,\"headOf\",subject)" +
+                    "VALUES (nextval('teacher_id_seq'),'"+teacher.getName()+
+                    "','"+teacher.getLastname()+
+                    "','"+teacher.getEmail()+
+                    "','"+teacher.getPassword()+
+                    "','"+teacher.getGender()+
+                    "','"+teacher.getAge()+
+                    "','"+teacher.getHeadOf()+
+                    "','"+teacher.getSubject().stream().collect(Collectors.joining("|"))+
+                    "')");
 
         }catch (Exception e){
             System.out.println(e.getMessage());
