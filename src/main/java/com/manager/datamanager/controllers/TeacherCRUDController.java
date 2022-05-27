@@ -24,23 +24,25 @@ public class TeacherCRUDController {
     private Parent root;
 
     @FXML
-    TextField nameTextField;
+    Label headerLabel;
     @FXML
-    TextField lastnameTextField;
+    private TextField nameTextField;
     @FXML
-    TextField emailTextField;
+    private TextField lastnameTextField;
     @FXML
-    PasswordField passwordPField;
+    private TextField emailTextField;
     @FXML
-    TextField genderTextField;
+    private PasswordField passwordPField;
     @FXML
-    TextField ageTextField;
+    private TextField genderTextField;
     @FXML
-    TextField headOfTextField;
+    private TextField ageTextField;
     @FXML
-    TextField subjectTextField;
+    private TextField headOfTextField;
     @FXML
-    Label subjectStatus;
+    private TextField subjectTextField;
+    @FXML
+    private Label subjectStatus;
 
     private List<String> list = new ArrayList<>();
 
@@ -49,17 +51,18 @@ public class TeacherCRUDController {
         {
             list.add(subjectTextField.getText().trim());
             subjectTextField.clear();
-        }
-        Tooltip tooltip = new Tooltip(list.stream().collect(Collectors.joining("\n")));
-        subjectStatus.setTooltip(tooltip);
-        subjectStatus.setText(Integer.toString(list.size()));
-        if(list.size() > 0){
+            Tooltip tooltip = new Tooltip(list.stream().collect(Collectors.joining("\n")));
+            subjectStatus.setTooltip(tooltip);
+            subjectStatus.setText(Integer.toString(list.size()));
             subjectStatus.setStyle("-fx-text-fill: green;");
-        }
-        else {
+            subjectTextField.setStyle("-fx-border-color: null;");
+        } else {
             subjectStatus.setText("ERR");
             subjectStatus.setStyle("-fx-text-fill: red;");
+            subjectTextField.setStyle("-fx-border-color: red;");
         }
+
+
     }
 
     public void subjectDeleteOne(){
@@ -73,32 +76,39 @@ public class TeacherCRUDController {
         subjectStatus.setText(Integer.toString(list.size()));
     }
 
-    public void addNewTeacher(ActionEvent event){
-        System.out.println("Додано нового викладача");
-        Teacher teacher = new Teacher(nameTextField.getText(),
-                lastnameTextField.getText(),
-                emailTextField.getText(),
-                genderTextField.getText(),
-                Integer.parseInt(ageTextField.getText()),
-                EncryptionMD5.encrypt(passwordPField.getText()),
-                list,
-                headOfTextField.getText()
-                );
-        SQLConnection.addTeacher(teacher);
-        nameTextField.clear();
-        lastnameTextField.clear();
-        emailTextField.clear();
-        genderTextField.clear();
-        ageTextField.clear();
-        passwordPField.clear();
-        headOfTextField.clear();
-        list.clear();
-        Tooltip tooltip = new Tooltip("Викладач успішно доданий");
-        headOfTextField.clear();
-        subjectStatus.setText("SUCC");
-        subjectStatus.setStyle("-fx-text-fill: green;");
-        subjectStatus.setTooltip(tooltip);
-
+    public void addNewTeacher(ActionEvent event) {
+        headOfTextField.setText(headOfTextField.getText().trim().isEmpty()? "none":"");
+        if (dataValidation()) {
+            System.out.println("Додано нового викладача");
+            Teacher teacher = new Teacher(nameTextField.getText(),
+                    lastnameTextField.getText(),
+                    emailTextField.getText(),
+                    genderTextField.getText(),
+                    Integer.parseInt(ageTextField.getText()),
+                    EncryptionMD5.encrypt(passwordPField.getText()),
+                    list,
+                    headOfTextField.getText()
+            );
+            SQLConnection.addTeacher(teacher);
+            nameTextField.clear();
+            lastnameTextField.clear();
+            emailTextField.clear();
+            genderTextField.clear();
+            ageTextField.clear();
+            passwordPField.clear();
+            headOfTextField.clear();
+            list.clear();
+            Tooltip tooltip = new Tooltip("Викладач успішно доданий");
+            headOfTextField.clear();
+            subjectStatus.setText("SUCC");
+            subjectStatus.setStyle("-fx-text-fill: green;");
+            subjectStatus.setTooltip(tooltip);
+            headerLabel.setStyle("-fx-text-fill: black");
+            headerLabel.setText("Додати викладача");
+        } else {
+            headerLabel.setStyle("-fx-text-fill: red");
+            headerLabel.setText("Помилка валідації");
+        }
 
         //TODO: data validation
     }
@@ -108,6 +118,58 @@ public class TeacherCRUDController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+    private boolean dataValidation(){
+        boolean pass = true;
+        String errorStyle = String.format("-fx-border-color: red; ");
+        String successStyle = String.format("-fx-border-color: green; ");
+        Tooltip genderTip = new Tooltip("чоловіча | жіноча");
+
+        if(!emailTextField.getText().trim().matches("\\D[A-Za-z.+_-]{1,30}[@]\\D[A-Z.a-z]{1,15}[.]\\D[a-z]{1,4}")){
+            emailTextField.setStyle(errorStyle);
+            emailTextField.clear();
+            pass = false;
+        }
+        else {
+            emailTextField.setStyle("-fx-border-color: null;");
+        }
+        if(!nameTextField.getText().trim().matches("[А-ЯІЙЮЄЇҐ][а-яійюєїґ]+")){
+            nameTextField.setStyle(errorStyle);
+            nameTextField.clear();
+            pass = false;
+        } else {
+            nameTextField.setStyle("-fx-border-color: null;");
+        }
+        if(!lastnameTextField.getText().trim().matches("[А-ЯІЙЮЄЇҐ][а-яійюєїґ]+")){
+            lastnameTextField.setStyle(errorStyle);
+            lastnameTextField.clear();
+            pass = false;
+        } else {
+            lastnameTextField.setStyle("-fx-border-color: null;");
+        }
+        if (!genderTextField.getText().trim().matches("чоловіча|жіноча")){
+            genderTextField.setStyle(errorStyle+"-fx-cursor: WAIT;");
+            genderTextField.clear();
+            genderTextField.setTooltip(genderTip);
+            pass = false;
+        } else {
+            genderTextField.setStyle("-fx-border-color: null;");
+        }
+        if (!ageTextField.getText().trim().matches("\\d+")){
+            ageTextField.setStyle(errorStyle);
+            ageTextField.clear();
+            pass = false;
+        } else {
+            ageTextField.setStyle("-fx-border-color: null;");
+        }
+        if(passwordPField.getText().trim().isEmpty()
+                || headOfTextField.getText().trim().isEmpty()
+                || list.isEmpty()){
+            pass = false;
+        }
+        return pass;
     }
 
 }

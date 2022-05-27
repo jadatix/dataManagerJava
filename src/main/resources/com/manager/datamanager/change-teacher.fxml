@@ -8,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.TeacherCRUDController">
    <children>
-      <Label layoutX="47.0" layoutY="24.0" prefHeight="34.0" prefWidth="246.0" text="Додати викладача">
+      <Label fx:id="headerLabel" layoutX="47.0" layoutY="24.0" prefHeight="34.0" prefWidth="246.0" text="Додати викладача">
          <font>
             <Font size="17.0" />
          </font></Label>
       <Button fx:id="backBtnTtoA" layoutX="453.0" layoutY="29.0" mnemonicParsing="false" onAction="#adminChangeTeacherBack" text="Назад" textFill="#f82626" />
-      <Label fx:id="nameLabel" layoutX="77.0" layoutY="70.0" prefHeight="16.0" prefWidth="60.0" text="Ім'я" />
+      <Label fx:id="nameLabel" layoutX="77.0" layoutY="78.0" prefHeight="16.0" prefWidth="60.0" text="Ім'я" />
       <Label fx:id="lastnameLabel" layoutX="77.0" layoutY="108.0" prefHeight="16.0" prefWidth="76.0" text="Прізвище" />
       <Label fx:id="emailLabel" layoutX="77.0" layoutY="138.0" prefHeight="16.0" prefWidth="76.0" text="email" />
       <Label fx:id="passwordLabel" layoutX="77.0" layoutY="168.0" prefHeight="16.0" prefWidth="76.0" text="Пароль" />
