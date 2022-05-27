@@ -9,12 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-
+import com.manager.datamanager.EncryptionMD5;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +80,27 @@ public class TeacherCRUDController {
                 emailTextField.getText(),
                 genderTextField.getText(),
                 Integer.parseInt(ageTextField.getText()),
-                passwordPField.getText(),
+                EncryptionMD5.encrypt(passwordPField.getText()),
                 list,
                 headOfTextField.getText()
                 );
         SQLConnection.addTeacher(teacher);
+        nameTextField.clear();
+        lastnameTextField.clear();
+        emailTextField.clear();
+        genderTextField.clear();
+        ageTextField.clear();
+        passwordPField.clear();
+        headOfTextField.clear();
+        list.clear();
+        Tooltip tooltip = new Tooltip("Викладач успішно доданий");
+        headOfTextField.clear();
+        subjectStatus.setText("SUCC");
+        subjectStatus.setStyle("-fx-text-fill: green;");
+        subjectStatus.setTooltip(tooltip);
+
+
+        //TODO: data validation
     }
     public void adminChangeTeacherBack(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("admin.fxml"));

@@ -64,7 +64,6 @@ public class SQLConnection {
             e.printStackTrace();
         }
 
-
         return statusCode;
     }
 }
