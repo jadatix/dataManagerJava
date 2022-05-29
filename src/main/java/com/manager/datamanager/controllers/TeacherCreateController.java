@@ -13,11 +13,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import com.manager.datamanager.EncryptionMD5;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class TeacherCRUDController {
+public class TeacherCreateController {
 
     private Stage stage;
     private Scene scene;
@@ -76,7 +78,7 @@ public class TeacherCRUDController {
         subjectStatus.setText(Integer.toString(list.size()));
     }
 
-    public void addNewTeacher(ActionEvent event) {
+    public void addNewTeacher(ActionEvent event) throws SQLException {
         headOfTextField.setText(headOfTextField.getText().trim().isEmpty()? "none":"");
         if (dataValidation()) {
             System.out.println("Додано нового викладача");
@@ -127,6 +129,14 @@ public class TeacherCRUDController {
         String successStyle = String.format("-fx-border-color: green; ");
         Tooltip genderTip = new Tooltip("чоловіча | жіноча");
 
+
+        if(SQLConnection.isTeacherExists(nameTextField.getText().trim(),lastnameTextField.getText().trim())){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Викладач уже існує");
+            errorAlert.setContentText("Викладач уже існує в базі");
+            errorAlert.showAndWait();
+        }
+
         if(!emailTextField.getText().trim().matches("\\D[A-Za-z.+_-]{1,30}[@]\\D[A-Z.a-z]{1,15}[.]\\D[a-z]{1,4}")){
             emailTextField.setStyle(errorStyle);
             emailTextField.clear();
@@ -149,7 +159,7 @@ public class TeacherCRUDController {
         } else {
             lastnameTextField.setStyle("-fx-border-color: null;");
         }
-        if (!genderTextField.getText().trim().matches("чоловіча|жіноча")){
+        if (!genderTextField.getText().trim().toLowerCase(Locale.ROOT).matches("чоловіча|жіноча")){
             genderTextField.setStyle(errorStyle+"-fx-cursor: WAIT;");
             genderTextField.clear();
             genderTextField.setTooltip(genderTip);

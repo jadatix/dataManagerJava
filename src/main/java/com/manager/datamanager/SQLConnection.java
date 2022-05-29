@@ -2,40 +2,35 @@ package com.manager.datamanager;
 
 import entities.Teacher;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SQLConnection {
-    public void testing(String[] args) {
+    public static void main(String[] args) {
+        System.out.println(SQLConnection.getAllTeachers());
+
+    }
+
+
+
+    public static boolean isTeacherExists(String name, String lastname){
+        Connection connection = init();
         try {
-            Connection connection;
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datamanager", "postgres", "");
-            if (connection != null) {
-                System.out.println("Connection: we did it :)");
-            } else {
-                System.out.println("Connection: that sucks man :(");
-            }
+            Statement statement = connection.createStatement();
+             ResultSet result = statement.executeQuery("SELECT * FROM teacher WHERE name ='"+
+                name+"' and lastname = '"+lastname+"';");
 
-            Statement  statement = connection.createStatement();
-            ResultSet res = statement.executeQuery("select * from test1table");
+             return result.next();
 
-            while (res.next()){
-                System.out.println(res.getString("name"));
-            }
-            statement.close();
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException err){
+            return false;
         }
     }
 
-    public static int addTeacher(Teacher teacher){
-        int statusCode=0;
+    private static Connection init(){
         try{
             Connection connection;
             Class.forName("org.postgresql.Driver");
@@ -44,10 +39,18 @@ public class SQLConnection {
                 System.out.println("Connection: we did it :)");
             } else {
                 System.out.println("Connection: connection failed :(");
-                statusCode=1;
             }
+            return  connection;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            Statement  statement = connection.createStatement();
+    public static void addTeacher(Teacher teacher) throws SQLException {
+        Connection connection = init();
+            Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO Teacher(id,name,lastname,email,password,gender,age,\"headOf\",subject)" +
                     "VALUES (nextval('teacher_id_seq'),'"+teacher.getName()+
                     "','"+teacher.getLastname()+
@@ -58,12 +61,31 @@ public class SQLConnection {
                     "','"+teacher.getHeadOf()+
                     "','"+teacher.getSubject().stream().collect(Collectors.joining("|"))+
                     "')");
+    }
 
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+    public static List<Teacher> getAllTeachers(){
+        Connection connection = init();
+        List<Teacher> teachers = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM teacher");
+            while (result.next()){
+                List<String> subjects = Arrays.asList(result.getString("subject").split("[|]"));
+                teachers.add(new Teacher(
+                        result.getString("name"),
+                        result.getString("lastname"),
+                        result.getString("email"),
+                        result.getString("gender"),
+                        Integer.parseInt(result.getString("age")),
+                        result.getString("password"),
+                        subjects,
+                        result.getString("headOf")
+                ));
+            }
+            return teachers;
+        }catch (SQLException err){
+            System.out.println("Connection error");
         }
-
-        return statusCode;
+        return null;
     }
 }
