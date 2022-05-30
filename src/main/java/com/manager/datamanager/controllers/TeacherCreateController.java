@@ -112,7 +112,6 @@ public class TeacherCreateController {
             headerLabel.setText("Помилка валідації");
         }
 
-        //TODO: data validation
     }
     public void adminChangeTeacherBack(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("admin.fxml"));

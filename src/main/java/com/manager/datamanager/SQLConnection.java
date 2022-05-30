@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class SQLConnection {
     public static void main(String[] args) {
         System.out.println(SQLConnection.getAllTeachers());
-
+//        SQLConnection.deleteTeacher("2","1");
     }
 
 
@@ -87,5 +87,16 @@ public class SQLConnection {
             System.out.println("Connection error");
         }
         return null;
+    }
+
+    public static void deleteTeacher(String name, String lastname){
+        Connection connection = init();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM teacher WHERE name ='"+
+                    name+"' and lastname = '"+lastname+"';");
+        }catch (SQLException err){
+
+        }
     }
 }

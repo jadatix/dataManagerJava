@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.TeacherShowController">
+  <tabs>
+    <Tab id="1" fx:id="firstTab" text="Всі викладачі">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" onKeyPressed="#keyDefiner" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                 <Label fx:id="headerLabel" layoutX="47.0" layoutY="24.0" prefHeight="34.0" prefWidth="246.0" text="Викладачі">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Label>
+                 <Button fx:id="backBtnTtoA" layoutX="453.0" layoutY="29.0" mnemonicParsing="false" onAction="#adminChangeTeacherBack" onKeyPressed="#keyDefiner" text="Назад" textFill="#f82626" />
+                 <Label fx:id="nameLabel" layoutX="77.0" layoutY="78.0" prefHeight="16.0" prefWidth="60.0" text="Ім'я" />
+                 <Label fx:id="lastnameLabel" layoutX="77.0" layoutY="108.0" prefHeight="16.0" prefWidth="76.0" text="Прізвище" />
+                 <Label fx:id="emailLabel" layoutX="77.0" layoutY="138.0" prefHeight="16.0" prefWidth="76.0" text="email" />
+                 <Label fx:id="headOfLabel" layoutX="77.0" layoutY="168.0" text="Куратор групи" />
+                 <Label fx:id="ageLabel" layoutX="77.0" layoutY="198.0" text="Вік" />
+                 <Label fx:id="genderLabel" layoutX="77.0" layoutY="228.0" text="Стать" />
+                 <Label fx:id="subjectLabel" layoutX="77.0" layoutY="258.0" text="Предмети" />
+                 <TextField fx:id="nameTextField" editable="false" layoutX="231.0" layoutY="74.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="200.0" />
+                 <TextField fx:id="lastnameTextField" editable="false" layoutX="231.0" layoutY="104.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="200.0" />
+                 <TextField fx:id="emailTextField" editable="false" layoutX="231.0" layoutY="134.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="200.0" />
+                 <TextField fx:id="headOfTextField" editable="false" layoutX="231.0" layoutY="164.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="200.0" />
+                 <TextField fx:id="genderTextField" editable="false" layoutX="231.0" layoutY="194.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="119.0" />
+                 <TextField fx:id="ageTextField" editable="false" layoutX="231.0" layoutY="224.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="119.0" />
+                 <TextArea fx:id="subjectTextArea" editable="false" layoutX="231.0" layoutY="254.0" onKeyPressed="#keyDefiner" prefHeight="60.0" prefWidth="200.0" />
+                  <Label fx:id="teacherNumber" layoutX="465.0" layoutY="299.0" text="Label" />
+                  <Button layoutX="122.0" layoutY="295.0" mnemonicParsing="false" onAction="#showNextTeacher" onKeyPressed="#keyDefiner" text="🠖" />
+                  <Button layoutX="82.0" layoutY="295.0" mnemonicParsing="false" onAction="#showPrevTeacher" onKeyPressed="#keyDefiner" text="🠔" />
+                   <Button fx:id="deleteSubjectBtn" layoutX="163.0" layoutY="295.0" mnemonicParsing="false" onAction="#deleteTeacher" text="🗑" textAlignment="CENTER" textFill="#f51f1f">
+                   </Button>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab id="2" fx:id="secondTab" text="Фільтри">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

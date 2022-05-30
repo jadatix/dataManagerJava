@@ -17,14 +17,23 @@ public class AdminController {
 
 
     public void adminChangeTeacher(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Main.class.getResource("change-teacher.fxml"));
+        root = FXMLLoader.load(Main.class.getResource("create-teacher.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
+    public void adminShowTeacher(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("show-teacher.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void adminChangeStudent(ActionEvent event) throws IOException {
-//        root = FXMLLoader.load(getClass().getResource("change-teacher.fxml"));
+//        root = FXMLLoader.load(getClass().getResource("create-teacher.fxml"));
 //        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 //        scene = new Scene(root);
 //        stage.setScene(scene);
