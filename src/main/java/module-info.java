@@ -9,4 +9,9 @@ module com.manager.datamanager {
     exports com.manager.datamanager;
     exports com.manager.datamanager.controllers;
     opens com.manager.datamanager.controllers to javafx.fxml;
+
+
+    opens entities to javafx.fxml;
+    exports entities;
+
 }

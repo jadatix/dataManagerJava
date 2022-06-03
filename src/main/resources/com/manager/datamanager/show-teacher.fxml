@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.Cursor?>
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.TeacherShowController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.TeacherShowController">
   <tabs>
     <Tab id="1" fx:id="firstTab" text="Всі викладачі">
       <content>
@@ -35,20 +36,20 @@
                   <Button fx:id="prevTeacherBtn" layoutX="82.0" layoutY="295.0" mnemonicParsing="false" onAction="#showPrevTeacher" onKeyPressed="#keyDefiner" text="🠔" />
                    <Button fx:id="deleteTeacherBtn" layoutX="491.0" layoutY="295.0" mnemonicParsing="false" onAction="#deleteTeacher" text="🗑" textAlignment="CENTER" textFill="#f51f1f" />
                    <Button fx:id="editTeacherBtn" layoutX="451.0" layoutY="295.0" onAction="#editTeacher" text="✎" textAlignment="CENTER" textFill="darkcyan" />
-                   <Button fx:id="confirmEditingBtn" layoutX="469.0" visible="false" layoutY="135.0" onAction="#confirmEdit" text="✓" textAlignment="CENTER" textFill="green" />
-                   <Button fx:id="cancelEditBtn" layoutX="469.0" visible="false" layoutY="104.0" onAction="#cancelEdit" text="✗" textAlignment="CENTER" textFill="red" />
+                   <Button fx:id="confirmEditingBtn" layoutX="469.0" layoutY="135.0" onAction="#confirmEdit" text="✓" textAlignment="CENTER" textFill="green" visible="false" />
+                   <Button fx:id="cancelEditBtn" layoutX="469.0" layoutY="104.0" onAction="#cancelEdit" text="✗" textAlignment="CENTER" textFill="red" visible="false" />
 <!--               editing mode subject input-->
-                   <TextField fx:id="subjectTextField" visible="false" layoutX="231.0" layoutY="254.0" prefHeight="24.0" prefWidth="200.0" />
-                   <Button fx:id="newSubjectButton" visible="false" layoutX="442.0" layoutY="254.0" mnemonicParsing="false" onAction="#subjectHandler" text="+" textAlignment="CENTER" textFill="green">
+                   <TextField fx:id="subjectTextField" layoutX="231.0" layoutY="254.0" prefHeight="24.0" prefWidth="200.0" visible="false" />
+                   <Button fx:id="newSubjectButton" layoutX="442.0" layoutY="254.0" mnemonicParsing="false" onAction="#subjectHandler" text="+" textAlignment="CENTER" textFill="green" visible="false">
                        <cursor>
                            <Cursor fx:constant="HAND" />
                        </cursor>
                    </Button>
-                   <Label fx:id="subjectStatus" layoutX="184.0" visible="false" layoutY="254.0" prefHeight="24.0" prefWidth="36.0" text="0" textAlignment="CENTER">
+                   <Label fx:id="subjectStatus" layoutX="184.0" layoutY="254.0" prefHeight="24.0" prefWidth="36.0" text="0" textAlignment="CENTER" visible="false">
                        <cursor>
                            <Cursor fx:constant="WAIT" />
                        </cursor></Label>
-                   <Button fx:id="deleteSubjectBtn" layoutX="483.0" visible="false" layoutY="254.0" mnemonicParsing="false" onAction="#subjectDeleteOne" text="🗑" textAlignment="CENTER" textFill="#f51f1f">
+                   <Button fx:id="deleteSubjectBtn" layoutX="483.0" layoutY="254.0" mnemonicParsing="false" onAction="#subjectDeleteOne" text="🗑" textAlignment="CENTER" textFill="#f51f1f" visible="false">
                        <cursor>
                            <Cursor fx:constant="HAND" />
                        </cursor>
@@ -59,9 +60,31 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab id="2" fx:id="secondTab" text="Фільтри">
+    <Tab id="2" fx:id="secondTab" text="Пошук">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <children>
+            <StackPane layoutX="65.0" layoutY="62.0" prefHeight="30.0" prefWidth="290.0">
+                <TextField fx:id="searchTextField" onKeyPressed="#searchBtn" promptText="Пошук..." StackPane.alignment="CENTER">
+                        <StackPane.margin>
+                           <Insets left="35.0" right="35.0" />
+                        </StackPane.margin></TextField>
+                <Button onAction="#search" text="🔎" StackPane.alignment="CENTER_RIGHT" />
+                <Button onAction="#clearSearch" text="✗" StackPane.alignment="CENTER_LEFT" />
+            </StackPane>
+
+            <TableView fx:id="tableView" layoutX="51.0" layoutY="101.0" prefHeight="237.0" prefWidth="510.0">
+                <columns>
+                  <TableColumn fx:id="lastnameColumn" editable="false" prefWidth="195.0" resizable="false" text="Прізвище" />
+                    <TableColumn fx:id="nameColumn" editable="false" prefWidth="95.0" resizable="false" text="Ім'я" />
+                  <TableColumn fx:id="ageColumn" editable="false" prefWidth="53.0" resizable="false" text="Вік" />
+                  <TableColumn fx:id="genderColumn" editable="false" prefWidth="92.0" resizable="false" text="Стать" />
+                    <TableColumn fx:id="headOfColumn" editable="false" prefWidth="74.0" resizable="false" text="Куратор" />
+                </columns>
+            </TableView>
+            
+        </children>
+        </AnchorPane>
       </content>
     </Tab>
   </tabs>

@@ -15,7 +15,7 @@ public class Teacher extends Person {
         this.headOf=headOf;
     }
 
-    public boolean isHeadOf(){return headOf.isEmpty();}
+    public boolean isHeadOf(){return (headOf.equals("none"));}
     public void addSubject(String subject){
         this.subject.add(subject);
     }

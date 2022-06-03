@@ -4,6 +4,8 @@ import com.manager.datamanager.EncryptionMD5;
 import com.manager.datamanager.Main;
 import com.manager.datamanager.SQLConnection;
 import entities.Teacher;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +13,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -267,4 +271,77 @@ public class TeacherShowController {
         }
         return pass;
     }
+
+
+    @FXML
+    private TableView<Teacher> tableView;
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private TableColumn<Teacher,String> nameColumn;
+    @FXML
+    private TableColumn<Teacher,String> lastnameColumn;
+    @FXML
+    private TableColumn<Teacher,Integer> ageColumn;
+    @FXML
+    private TableColumn<Teacher,String> genderColumn;
+    @FXML
+    private TableColumn<Teacher,String> headOfColumn;
+    @FXML
+    private TabPane tabPane;
+
+    public void clearSearch(){
+        searchTextField.clear();
+    }
+
+    public void search(){
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("name"));
+        lastnameColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("lastname"));
+        ageColumn.setCellValueFactory(new PropertyValueFactory<Teacher,Integer>("age"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("gender"));
+        headOfColumn.setCellValueFactory(new PropertyValueFactory<>("headOf"));
+
+        tableView.setItems(searchResult(searchTextField.getText().trim()));
+        tableView.setRowFactory(tv -> {
+            TableRow<Teacher> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+                    Teacher clickedRow = row.getItem();
+                    System.out.println(clickedRow);
+                    redirectTo(clickedRow);
+                }
+            });
+            return row ;
+        });
+    }
+    public void searchBtn(KeyEvent keyEvent){
+        if(keyEvent.getCode() == KeyCode.ENTER){
+            search();
+        }
+    }
+
+    private void redirectTo(Teacher t){
+        current = teachers.indexOf(t);
+        tabPane.getSelectionModel().select(0);
+        showNextTeacher(true);
+        showNextTeacher(false);
+    }
+
+
+    private ObservableList<Teacher> searchResult(String searchRequest){
+        List<Teacher> searchRes = new ArrayList<>();
+        for(Teacher teacher: teachers){
+            if (teacher.getName().contains(searchRequest) ||
+                    teacher.getLastname().contains(searchRequest)||
+                    Integer.toString(teacher.getAge()).contains(searchRequest)||
+                    teacher.getGender().contains(searchRequest.toLowerCase())){
+                searchRes.add(teacher);
+            }
+        }
+        return FXCollections.observableArrayList(searchRes);
+    }
+
+
+
 }
