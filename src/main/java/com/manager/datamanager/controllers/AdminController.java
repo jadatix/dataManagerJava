@@ -25,11 +25,14 @@ public class AdminController {
     }
 
     public void adminShowTeacher(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Main.class.getResource("show-teacher.fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("show-teacher.fxml"));
+        root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        TeacherShowController showController = loader.getController();
+        showController.showNextTeacher();
     }
 
     public void adminChangeStudent(ActionEvent event) throws IOException {

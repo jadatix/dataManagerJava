@@ -68,7 +68,7 @@ public class SQLConnection {
         List<Teacher> teachers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM teacher");
+            ResultSet result = statement.executeQuery("SELECT * FROM teacher ORDER BY lastname;");
             while (result.next()){
                 List<String> subjects = Arrays.asList(result.getString("subject").split("[|]"));
                 teachers.add(new Teacher(
@@ -105,13 +105,13 @@ public class SQLConnection {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE teacher SET name='"+ teacher.getName() +"'," +
-                    "lastname=' "+teacher.getLastname()+"'," +
+                    "lastname='"+teacher.getLastname()+"'," +
                     "email='"+teacher.getEmail()+"'," +
                     "gender='"+teacher.getGender() + "'," +
                     "age='"+teacher.getAge()+"'," +
                     "\"headOf\"='"+teacher.getHeadOf()+"'," +
                     "subject='"+teacher.getSubject().stream().collect(Collectors.joining("|"))+"'" +
-                    "WHERE name='"+name+"' and lastname='"+lastname+"';");
+                    " WHERE name='"+name+"' and lastname='"+lastname+"';");
             return true;
         } catch (SQLException err){
             System.out.println(err.getMessage());

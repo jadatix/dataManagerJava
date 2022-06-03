@@ -31,15 +31,15 @@
                  <TextField fx:id="genderTextField" editable="false" layoutX="231.0" layoutY="224.0" onKeyPressed="#keyDefiner" prefHeight="24.0" prefWidth="119.0" />
                  <TextArea fx:id="subjectTextArea" editable="false" layoutX="231.0" layoutY="254.0" onKeyPressed="#keyDefiner" prefHeight="60.0" prefWidth="200.0" />
                   <Label fx:id="teacherNumber" layoutX="465.0" layoutY="78.0" text="Label" />
-                  <Button layoutX="122.0" layoutY="295.0" mnemonicParsing="false" onAction="#showNextTeacher" onKeyPressed="#keyDefiner" text="🠖" />
-                  <Button layoutX="82.0" layoutY="295.0" mnemonicParsing="false" onAction="#showPrevTeacher" onKeyPressed="#keyDefiner" text="🠔" />
-                   <Button fx:id="deleteTeacherBtn" layoutX="541.0" layoutY="295.0" mnemonicParsing="false" onAction="#deleteTeacher" text="🗑" textAlignment="CENTER" textFill="#f51f1f" />
-                   <Button fx:id="editTeacherBtn" layoutX="501.0" layoutY="295.0" onAction="#editTeacher" text="✎" textAlignment="CENTER" textFill="darkcyan" />
+                  <Button fx:id="nextTeacherBtn" layoutX="122.0" layoutY="295.0" mnemonicParsing="false" onAction="#showNextTeacher" onKeyPressed="#keyDefiner" text="🠖" />
+                  <Button fx:id="prevTeacherBtn" layoutX="82.0" layoutY="295.0" mnemonicParsing="false" onAction="#showPrevTeacher" onKeyPressed="#keyDefiner" text="🠔" />
+                   <Button fx:id="deleteTeacherBtn" layoutX="491.0" layoutY="295.0" mnemonicParsing="false" onAction="#deleteTeacher" text="🗑" textAlignment="CENTER" textFill="#f51f1f" />
+                   <Button fx:id="editTeacherBtn" layoutX="451.0" layoutY="295.0" onAction="#editTeacher" text="✎" textAlignment="CENTER" textFill="darkcyan" />
                    <Button fx:id="confirmEditingBtn" layoutX="469.0" visible="false" layoutY="135.0" onAction="#confirmEdit" text="✓" textAlignment="CENTER" textFill="green" />
                    <Button fx:id="cancelEditBtn" layoutX="469.0" visible="false" layoutY="104.0" onAction="#cancelEdit" text="✗" textAlignment="CENTER" textFill="red" />
 <!--               editing mode subject input-->
                    <TextField fx:id="subjectTextField" visible="false" layoutX="231.0" layoutY="254.0" prefHeight="24.0" prefWidth="200.0" />
-                   <Button fx:id="newSubjectButton" visible="false" layoutX="442.0" layoutY="284.0" mnemonicParsing="false" onAction="#subjectHandler" text="+" textAlignment="CENTER" textFill="green">
+                   <Button fx:id="newSubjectButton" visible="false" layoutX="442.0" layoutY="254.0" mnemonicParsing="false" onAction="#subjectHandler" text="+" textAlignment="CENTER" textFill="green">
                        <cursor>
                            <Cursor fx:constant="HAND" />
                        </cursor>
@@ -48,7 +48,7 @@
                        <cursor>
                            <Cursor fx:constant="WAIT" />
                        </cursor></Label>
-                   <Button fx:id="deleteSubjectBtn" layoutX="483.0" visible="false" layoutY="284.0" mnemonicParsing="false" onAction="#subjectDeleteOne" text="🗑" textAlignment="CENTER" textFill="#f51f1f">
+                   <Button fx:id="deleteSubjectBtn" layoutX="483.0" visible="false" layoutY="254.0" mnemonicParsing="false" onAction="#subjectDeleteOne" text="🗑" textAlignment="CENTER" textFill="#f51f1f">
                        <cursor>
                            <Cursor fx:constant="HAND" />
                        </cursor>

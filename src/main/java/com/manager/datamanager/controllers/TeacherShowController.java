@@ -58,6 +58,10 @@ public class TeacherShowController {
     @FXML
     private Button confirmEditingBtn;
     @FXML
+    private Button nextTeacherBtn;
+    @FXML
+    private Button prevTeacherBtn;
+    @FXML
     private TextField subjectTextField;
 
     private static List<Teacher> teachers = SQLConnection.getAllTeachers();
@@ -73,11 +77,11 @@ public class TeacherShowController {
         stage.show();
     }
 
-    public void showNextTeacher(ActionEvent event){
+    public void showNextTeacher(){
         showNextTeacher(true);
 
     }
-    public void showPrevTeacher(ActionEvent event){
+    public void showPrevTeacher(){
         showNextTeacher(false);
 
     }
@@ -130,6 +134,8 @@ public class TeacherShowController {
         subjectTextField.setVisible(editable);
         deleteTeacherBtn.setVisible(!editable);
         confirmEditingBtn.setVisible(editable);
+        nextTeacherBtn.setVisible(!editable);
+        prevTeacherBtn.setVisible(!editable);
 
         nameTextField.setEditable(editable);
         lastnameTextField.setEditable(editable);
@@ -140,21 +146,23 @@ public class TeacherShowController {
 
 
 
+
     }
 
     public void editTeacher(){
         swapFieldsMode(true);
         teacherNumber.setText("editing");
 
-        if(teacherEditSubject.isEmpty()){
-            teacherEditSubject.addAll(teachers.get(current).getSubject());
-        }
+
+        teacherEditSubject.addAll(teachers.get(current).getSubject());
+
         subjectStatus.setText(Integer.toString(teacherEditSubject.size()));
         Tooltip tooltip = new Tooltip(teachers.get(current).getSubject().stream().collect(Collectors.joining("\n")));
         subjectStatus.setTooltip(tooltip);
     }
 
     public void cancelEdit(){
+        teacherEditSubject.clear();
         swapFieldsMode(false);
         showNextTeacher(true);
         showNextTeacher(false);
@@ -206,6 +214,8 @@ public class TeacherShowController {
                 teachers.remove(current+1);
             }
             cancelEdit();
+        } else {
+            teacherNumber.setText("ERR");
         }
 
     }
