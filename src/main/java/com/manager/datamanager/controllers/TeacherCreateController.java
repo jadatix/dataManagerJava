@@ -79,17 +79,17 @@ public class TeacherCreateController {
     }
 
     public void addNewTeacher(ActionEvent event) throws SQLException {
-        headOfTextField.setText(headOfTextField.getText().trim().isEmpty()? "none":"");
+        headOfTextField.setText(headOfTextField.getText().trim().isEmpty()? "none":headOfTextField.getText().trim());
         if (dataValidation()) {
             System.out.println("Додано нового викладача");
-            Teacher teacher = new Teacher(nameTextField.getText(),
-                    lastnameTextField.getText(),
-                    emailTextField.getText(),
-                    genderTextField.getText(),
-                    Integer.parseInt(ageTextField.getText()),
+            Teacher teacher = new Teacher(nameTextField.getText().trim(),
+                    lastnameTextField.getText().trim(),
+                    emailTextField.getText().trim(),
+                    genderTextField.getText().trim().toLowerCase(Locale.ROOT),
+                    Integer.parseInt(ageTextField.getText().trim()),
                     EncryptionMD5.encrypt(passwordPField.getText()),
                     list,
-                    headOfTextField.getText()
+                    headOfTextField.getText().trim()
             );
             SQLConnection.addTeacher(teacher);
             nameTextField.clear();
@@ -174,7 +174,6 @@ public class TeacherCreateController {
             ageTextField.setStyle("-fx-border-color: null;");
         }
         if(passwordPField.getText().trim().isEmpty()
-                || headOfTextField.getText().trim().isEmpty()
                 || list.isEmpty()){
             pass = false;
         }

@@ -99,4 +99,24 @@ public class SQLConnection {
 
         }
     }
+
+    public static boolean updateTeacher(Teacher teacher, String name,String lastname){
+        Connection connection = init();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE teacher SET name='"+ teacher.getName() +"'," +
+                    "lastname=' "+teacher.getLastname()+"'," +
+                    "email='"+teacher.getEmail()+"'," +
+                    "gender='"+teacher.getGender() + "'," +
+                    "age='"+teacher.getAge()+"'," +
+                    "\"headOf\"='"+teacher.getHeadOf()+"'," +
+                    "subject='"+teacher.getSubject().stream().collect(Collectors.joining("|"))+"'" +
+                    "WHERE name='"+name+"' and lastname='"+lastname+"';");
+            return true;
+        } catch (SQLException err){
+            System.out.println(err.getMessage());
+            return false;
+        }
+    }
+
 }
