@@ -1,8 +1,10 @@
 package com.manager.datamanager;
 
+import entities.Student;
 import entities.Teacher;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +18,11 @@ public class SQLConnection {
 
 
 
-    public static boolean isTeacherExists(String name, String lastname){
+    public static boolean isExists(String name, String lastname, String table){
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-             ResultSet result = statement.executeQuery("SELECT * FROM teacher WHERE name ='"+
+             ResultSet result = statement.executeQuery("SELECT * FROM "+table+" WHERE name ='"+
                 name+"' and lastname = '"+lastname+"';");
 
              return result.next();
@@ -116,6 +118,26 @@ public class SQLConnection {
         } catch (SQLException err){
             System.out.println(err.getMessage());
             return false;
+        }
+    }
+    public static void addStudent(Student student) {
+        Connection connection = init();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO student(id, name, lastname, email, password, gender, age, \"groupNum\", \"durationOfEducation\", \"startEducation\")" +
+                    "VALUES (nextval('teacher_id_seq'),'" + student.getName() +
+                    "','" + student.getLastname() +
+                    "','" + student.getEmail() +
+                    "','" + student.getPassword() +
+                    "','" + student.getGender() +
+                    "','" + student.getAge() +
+                    "','" + student.getGroupNum() +
+                    "','" + student.getDurationOfEducation() +
+                    "','" + student.getStringDate("yyyy-MM-dd") +
+                    "')");
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
+            System.out.println(err.getStackTrace());
         }
     }
 

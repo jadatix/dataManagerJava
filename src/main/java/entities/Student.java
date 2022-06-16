@@ -1,5 +1,7 @@
 package entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Student extends Person{
@@ -7,14 +9,18 @@ public class Student extends Person{
     private int durationOfEducation;
     private Date startEducation;
 
-    Student(){super(); groupNum=""; durationOfEducation=0; startEducation = new Date();}
-    Student(String name, String lastname, String email, String gender, int age,String password, String groupNum,  int durationOfEducation, Date startEducation) {
+    public Student(){super(); groupNum=""; durationOfEducation=0; startEducation = new Date();}
+    public Student(String name, String lastname, String email, String gender, int age,String password, String groupNum,  int durationOfEducation, Date startEducation) {
         super(name, lastname, email, gender, age,password);
         this.groupNum = groupNum;
         this.durationOfEducation = durationOfEducation;
         this.startEducation = startEducation;
     }
 
+    public String getStringDate(String pattern){
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(startEducation);
+    }
     @Override
     public int getAge() {
         return super.getAge();
