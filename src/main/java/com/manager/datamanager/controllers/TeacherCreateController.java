@@ -129,7 +129,7 @@ public class TeacherCreateController {
         Tooltip genderTip = new Tooltip("чоловіча | жіноча");
 
 
-        if(SQLConnection.isTeacherExists(nameTextField.getText().trim(),lastnameTextField.getText().trim())){
+        if(SQLConnection.isExists(nameTextField.getText().trim(),lastnameTextField.getText().trim(),"teacher")){
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Викладач уже існує");
             errorAlert.setContentText("Викладач уже існує в базі");
