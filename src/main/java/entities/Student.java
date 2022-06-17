@@ -17,7 +17,7 @@ public class Student extends Person{
         this.startEducation = startEducation;
     }
 
-    public String getStringDate(String pattern){
+    public String getStartEducation(String pattern){
         DateFormat df = new SimpleDateFormat(pattern);
         return df.format(startEducation);
     }
