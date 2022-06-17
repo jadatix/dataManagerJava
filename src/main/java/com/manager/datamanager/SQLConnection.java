@@ -1,5 +1,6 @@
 package com.manager.datamanager;
 
+import entities.Student;
 import entities.Teacher;
 
 import java.sql.*;
@@ -16,11 +17,11 @@ public class SQLConnection {
 
 
 
-    public static boolean isTeacherExists(String name, String lastname){
+    public static boolean isExists(String name, String lastname, String table){
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-             ResultSet result = statement.executeQuery("SELECT * FROM teacher WHERE name ='"+
+             ResultSet result = statement.executeQuery("SELECT * FROM "+table+" WHERE name ='"+
                 name+"' and lastname = '"+lastname+"';");
 
              return result.next();
@@ -89,11 +90,11 @@ public class SQLConnection {
         return null;
     }
 
-    public static void deleteTeacher(String name, String lastname){
+    public static void delete(String name, String lastname, String table){
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM teacher WHERE name ='"+
+            statement.executeUpdate("DELETE FROM "+table+" WHERE name ='"+
                     name+"' and lastname = '"+lastname+"';");
         }catch (SQLException err){
 
@@ -111,6 +112,73 @@ public class SQLConnection {
                     "age='"+teacher.getAge()+"'," +
                     "\"headOf\"='"+teacher.getHeadOf()+"'," +
                     "subject='"+teacher.getSubject().stream().collect(Collectors.joining("|"))+"'" +
+                    " WHERE name='"+name+"' and lastname='"+lastname+"';");
+            return true;
+        } catch (SQLException err){
+            System.out.println(err.getMessage());
+            return false;
+        }
+    }
+
+    public static void addStudent(Student student) {
+        Connection connection = init();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO student(id, name, lastname, email, password, gender, age, \"groupNum\", \"durationOfEducation\", \"startEducation\")" +
+                    "VALUES (nextval('student_id_seq'),'" + student.getName() +
+                    "','" + student.getLastname() +
+                    "','" + student.getEmail() +
+                    "','" + student.getPassword() +
+                    "','" + student.getGender() +
+                    "','" + student.getAge() +
+                    "','" + student.getGroupNum() +
+                    "','" + student.getDurationOfEducation() +
+                    "','" + student.getStartEducation("yyyy-MM-dd") +
+                    "')");
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
+            System.out.println(err.getStackTrace());
+        }
+    }
+
+    public static List<Student> getAllStudents(){
+        Connection connection = init();
+        List<Student> students = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM student ORDER BY lastname;");
+            while (result.next()){
+                students.add(new Student(
+                        result.getString("name"),
+                        result.getString("lastname"),
+                        result.getString("email"),
+                        result.getString("gender"),
+                        Integer.parseInt(result.getString("age")),
+                        result.getString("password"),
+                        result.getString("groupNum"),
+                        Integer.parseInt(result.getString("durationOfEducation")),
+                        result.getDate("startEducation")
+                ));
+            }
+            return students;
+        }catch (SQLException err){
+            System.out.println("Connection error");
+        }
+        return null;
+    }
+
+    public static boolean updateStudent(Student student, String name, String lastname){
+        Connection connection = init();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE student SET name='"+ student.getName() +"'," +
+                    "lastname='"+ student.getLastname()+"'," +
+                    "email='"+ student.getEmail()+"'," +
+                    "gender='"+ student.getGender() + "'," +
+                    "age='"+ student.getAge()+"'," +
+                    "\"groupNum\"='"+ student.getGroupNum()+"'," +
+                    "\"durationOfEducation\"='"+student.getDurationOfEducation()+"'," +
+                    "\"startEducation\"='"+student.getStartEducation("yyyy-MM-dd")+"'" +
                     " WHERE name='"+name+"' and lastname='"+lastname+"';");
             return true;
         } catch (SQLException err){

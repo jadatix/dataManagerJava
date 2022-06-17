@@ -1,25 +1,25 @@
 package com.manager.datamanager.controllers;
 
-import com.manager.datamanager.SQLConnection;
+import com.manager.datamanager.EncryptionMD5;
 import com.manager.datamanager.Main;
-import entities.Teacher;
+import com.manager.datamanager.SQLConnection;
+import entities.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import com.manager.datamanager.EncryptionMD5;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
-public class TeacherCreateController {
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+
+public class StudentCreateController {
 
     private Stage stage;
     private Scene scene;
@@ -40,99 +40,57 @@ public class TeacherCreateController {
     @FXML
     private TextField ageTextField;
     @FXML
-    private TextField headOfTextField;
+    private TextField groupNumTextField;
     @FXML
-    private TextField subjectTextField;
+    private DatePicker educationStartDatePicker;
     @FXML
-    private Label subjectStatus;
+    private TextField durationTextField;
 
-    private List<String> list = new ArrayList<>();
-
-    public void subjectHandler(){
-        if(!subjectTextField.getText().isEmpty() && !list.contains(subjectTextField.getText().trim()))
-        {
-            list.add(subjectTextField.getText().trim());
-            subjectTextField.clear();
-            Tooltip tooltip = new Tooltip(list.stream().collect(Collectors.joining("\n")));
-            subjectStatus.setTooltip(tooltip);
-            subjectStatus.setText(Integer.toString(list.size()));
-            subjectStatus.setStyle("-fx-text-fill: green;");
-            subjectTextField.setStyle("-fx-border-color: null;");
-        } else {
-            subjectStatus.setText("ERR");
-            subjectStatus.setStyle("-fx-text-fill: red;");
-            subjectTextField.setStyle("-fx-border-color: red;");
-        }
-
-
-    }
-
-    public void subjectDeleteOne(){
-
-        if( list.size()>0 && !list.remove(subjectTextField.getText().trim())){
-            list.remove(list.size()-1);
-        }
-        subjectTextField.clear();
-        Tooltip tooltip = new Tooltip(list.stream().collect(Collectors.joining("\n")));
-        subjectStatus.setTooltip(tooltip);
-        subjectStatus.setText(Integer.toString(list.size()));
-    }
-
-    public void addNewTeacher(ActionEvent event) throws SQLException {
-        headOfTextField.setText(headOfTextField.getText().trim().isEmpty()? "none":headOfTextField.getText().trim());
+    public void addNewStudent(ActionEvent event) {;
         if (dataValidation()) {
-            System.out.println("Додано нового викладача");
-            Teacher teacher = new Teacher(nameTextField.getText().trim(),
+            LocalDate date = educationStartDatePicker.getValue();
+            String formattedDate = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            System.out.println(formattedDate);
+            System.out.println("Додано нового студента");
+            Student student = new Student(nameTextField.getText().trim(),
                     lastnameTextField.getText().trim(),
                     emailTextField.getText().trim(),
                     genderTextField.getText().trim().toLowerCase(Locale.ROOT),
                     Integer.parseInt(ageTextField.getText().trim()),
                     EncryptionMD5.encrypt(passwordPField.getText()),
-                    list,
-                    headOfTextField.getText().trim()
+                    groupNumTextField.getText().trim(),
+                    Integer.parseInt(durationTextField.getText().trim()),
+                    Date.from(date.atStartOfDay( ZoneId.systemDefault()).toInstant())
             );
-            SQLConnection.addTeacher(teacher);
+            SQLConnection.addStudent(student);
             nameTextField.clear();
             lastnameTextField.clear();
             emailTextField.clear();
             genderTextField.clear();
             ageTextField.clear();
             passwordPField.clear();
-            headOfTextField.clear();
-            list.clear();
+            groupNumTextField.clear();
+            educationStartDatePicker.getEditor().clear();
+            durationTextField.clear();
             Tooltip tooltip = new Tooltip("Викладач успішно доданий");
-            headOfTextField.clear();
-            subjectStatus.setText("SUCC");
-            subjectStatus.setStyle("-fx-text-fill: green;");
-            subjectStatus.setTooltip(tooltip);
             headerLabel.setStyle("-fx-text-fill: black");
-            headerLabel.setText("Додати викладача");
+            headerLabel.setText("Додати студента");
         } else {
             headerLabel.setStyle("-fx-text-fill: red");
             headerLabel.setText("Помилка валідації");
         }
 
-    }
-    public void adminChangeTeacherBack(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Main.class.getResource("admin.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
-
+    }
     private boolean dataValidation(){
         boolean pass = true;
         String errorStyle = String.format("-fx-border-color: red; ");
-        String successStyle = String.format("-fx-border-color: green; ");
         Tooltip genderTip = new Tooltip("чоловіча | жіноча");
 
-
-        if(SQLConnection.isExists(nameTextField.getText().trim(),lastnameTextField.getText().trim(),"teacher")){
+        if(SQLConnection.isExists(nameTextField.getText().trim(),lastnameTextField.getText().trim(),"student")){
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Викладач уже існує");
-            errorAlert.setContentText("Викладач уже існує в базі");
+            errorAlert.setHeaderText("Студент уже існує");
+            errorAlert.setContentText("Студент уже існує в базі");
             errorAlert.showAndWait();
         }
 
@@ -173,11 +131,43 @@ public class TeacherCreateController {
         } else {
             ageTextField.setStyle("-fx-border-color: null;");
         }
-        if(passwordPField.getText().trim().isEmpty()
-                || list.isEmpty()){
+        if (!groupNumTextField.getText().trim().matches("\\d+")){
+            groupNumTextField.setStyle(errorStyle);
+            groupNumTextField.clear();
             pass = false;
+        } else {
+            groupNumTextField.setStyle("-fx-border-color: null;");
+        }
+        if (!durationTextField.getText().trim().matches("\\d+")){
+            durationTextField.setStyle(errorStyle);
+            durationTextField.clear();
+            pass = false;
+        } else {
+            durationTextField.setStyle("-fx-border-color: null;");
+        }
+        if(passwordPField.getText().trim().isEmpty() || !educationStartDatePicker.getEditor().getText().trim().matches("[0-9]{1,2}/[0-9]{1,2}/[1-9][0-9]{3}"))
+        {
+            pass = false;
+            if(!passwordPField.getText().trim().isEmpty()){
+                educationStartDatePicker.setStyle(errorStyle);
+            }
+        } else {
+            educationStartDatePicker.setStyle("-fx-border-color: null;");
         }
         return pass;
     }
 
+
+
+    public void adminChangeStudentBack(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(Main.class.getResource("admin.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage = (Stage)educationStartDatePicker.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

@@ -32,7 +32,7 @@ public class TeacherShowController {
 
 
     @FXML
-    private TextField nameTextField = new TextField(teachers.get(0).getName());
+    private TextField nameTextField;
     @FXML
     private TextField lastnameTextField;
     @FXML
@@ -68,10 +68,13 @@ public class TeacherShowController {
     @FXML
     private TextField subjectTextField;
 
-    private static List<Teacher> teachers = SQLConnection.getAllTeachers();
+    private static List<Teacher> teachers = new ArrayList<>();
     private int current = -1;
     private List<String> teacherEditSubject = new ArrayList<>();
 
+    public void init(){
+        teachers = SQLConnection.getAllTeachers();
+    }
 
     public void adminChangeTeacherBack(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("admin.fxml"));
@@ -102,7 +105,7 @@ public class TeacherShowController {
     private void showNextTeacher(boolean direction){
         shiftCurrent(direction);
         Teacher currentTeacher =  teachers.get(current);
-        teacherNumber.setText(Integer.toString(current+1));
+        teacherNumber.setText(Integer.toString(current+1) + "/" + Integer.toString(teachers.size()));
         nameTextField.setText(currentTeacher.getName());
         lastnameTextField.setText(currentTeacher.getLastname());
         emailTextField.setText(currentTeacher.getEmail());
@@ -121,9 +124,10 @@ public class TeacherShowController {
     }
 
     public void deleteTeacher(ActionEvent event){
-        if(current >=0) {
-            SQLConnection.deleteTeacher(teachers.get(current).getName(), teachers.get(current).getLastname());
+        if(teachers.size() != 1) {
+            SQLConnection.delete(teachers.get(current).getName(), teachers.get(current).getLastname(),"teacher");
             teachers.remove(current);
+            current--;
             showNextTeacher(true);
         }
     }
@@ -335,7 +339,8 @@ public class TeacherShowController {
             if (teacher.getName().contains(searchRequest) ||
                     teacher.getLastname().contains(searchRequest)||
                     Integer.toString(teacher.getAge()).contains(searchRequest)||
-                    teacher.getGender().contains(searchRequest.toLowerCase())){
+                    teacher.getGender().contains(searchRequest.toLowerCase())||
+                    teacher.getHeadOf().contains(searchRequest.toLowerCase())){
                 searchRes.add(teacher);
             }
         }

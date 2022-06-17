@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.manager.datamanager.controllers.StudentShowController">
+    <tabs>
+        <Tab id="1" fx:id="firstTab" text="Всі викладачі">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" onKeyPressed="#keyDefiner" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Label fx:id="headerLabel" layoutX="47.0" layoutY="24.0" prefHeight="34.0" prefWidth="246.0" text="Викладачі">
+                            <font>
+                                <Font size="17.0" />
+                            </font></Label>
+                        <Button fx:id="backBtnStoA" layoutX="453.0" layoutY="29.0" mnemonicParsing="false" onAction="#adminChangeStudentBack" text="Назад" textFill="#f82626" />
+                        <Label fx:id="nameLabel" layoutX="77.0" layoutY="78.0" prefHeight="16.0" prefWidth="60.0" text="Ім'я" />
+                        <Label fx:id="lastnameLabel" layoutX="77.0" layoutY="108.0" prefHeight="16.0" prefWidth="76.0" text="Прізвище" />
+                        <Label fx:id="emailLabel" layoutX="77.0" layoutY="138.0" prefHeight="16.0" prefWidth="76.0" text="email" />
+                        <Label fx:id="groupNumLabel" layoutX="77.0" layoutY="168.0" text="Група" />
+                        <Label fx:id="ageLabel" layoutX="77.0" layoutY="198.0" text="Вік" />
+                        <Label fx:id="genderLabel" layoutX="77.0" layoutY="228.0" text="Стать" />
+                        <Label fx:id="startEducationLabel" layoutX="77.0" layoutY="258.0" text="Початок навчання" />
+                        <Label fx:id="durationLabel" layoutX="79.0" layoutY="288.0" prefHeight="16.0" prefWidth="149.0" text="Тривалість навчання" />
+                        <TextField fx:id="nameTextField" editable="false" layoutX="231.0" layoutY="74.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="lastnameTextField" editable="false" layoutX="231.0" layoutY="104.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="emailTextField" editable="false" layoutX="231.0" layoutY="134.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="groupNumTextField" editable="false" layoutX="231.0" layoutY="164.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="ageTextField" editable="false" layoutX="231.0" layoutY="194.0" prefHeight="24.0" prefWidth="119.0" />
+                        <TextField fx:id="genderTextField" editable="false" layoutX="231.0" layoutY="224.0" prefHeight="24.0" prefWidth="119.0" />
+                        <DatePicker fx:id="educationStartDatePicker" editable="false" layoutX="231.0" layoutY="254.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="durationTextField" editable="false" layoutX="231.0" layoutY="284.0" prefHeight="24.0" prefWidth="119.0" />
+                        <Label layoutX="364.0" layoutY="288.0" prefHeight="16.0" prefWidth="76.0" text="місяця(ів)" />
+
+                        <Label fx:id="studentNumber" layoutX="465.0" layoutY="78.0" text="Label" />
+                        <Button fx:id="nextStudentBtn" layoutX="125.0" layoutY="316.0" mnemonicParsing="false" onAction="#showNextStudent" onKeyPressed="#keyDefiner" text="🠖" />
+                        <Button fx:id="prevStudentBtn" layoutX="82.0" layoutY="316.0" mnemonicParsing="false" onAction="#showPrevStudent" onKeyPressed="#keyDefiner" text="🠔" />
+                        <Button fx:id="deleteStudentBtn" layoutX="501.0" layoutY="316.0" mnemonicParsing="false" onAction="#deleteStudent" text="🗑" textAlignment="CENTER" textFill="#f51f1f" />
+                        <Button fx:id="editStudentBtn" layoutX="455.0" layoutY="316.0" onAction="#editStudent" text="✎" textAlignment="CENTER" textFill="darkcyan" />
+                        <Button fx:id="confirmEditingBtn" layoutX="469.0" layoutY="135.0" onAction="#confirmEdit" text="✓" textAlignment="CENTER" textFill="green" visible="false" />
+                        <Button fx:id="cancelEditBtn" layoutX="469.0" layoutY="104.0" onAction="#cancelEdit" text="✗" textAlignment="CENTER" textFill="red" visible="false" />
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab id="2" fx:id="secondTab" text="Пошук">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <StackPane layoutX="65.0" layoutY="62.0" prefHeight="30.0" prefWidth="290.0">
+                            <TextField fx:id="searchTextField" onKeyPressed="#searchBtn" promptText="Пошук..." StackPane.alignment="CENTER">
+                                <StackPane.margin>
+                                    <Insets left="35.0" right="35.0" />
+                                </StackPane.margin></TextField>
+                            <Button onAction="#search" text="🔎" StackPane.alignment="CENTER_RIGHT" />
+                            <Button onAction="#clearSearch" text="✗" StackPane.alignment="CENTER_LEFT" />
+                        </StackPane>
+
+                        <TableView fx:id="tableView" layoutX="51.0" layoutY="101.0" prefHeight="237.0" prefWidth="510.0">
+                            <columns>
+                                <TableColumn fx:id="lastnameColumn" editable="false" prefWidth="183.0" resizable="false" text="Прізвище" />
+                                <TableColumn fx:id="nameColumn" editable="false" prefWidth="87.0" resizable="false" text="Ім'я" />
+                                <TableColumn fx:id="ageColumn" editable="false" prefWidth="54.0" resizable="false" text="Вік" />
+                                <TableColumn fx:id="groupNumColumn" editable="false" prefWidth="73.0" resizable="false" text="Група" />
+                                <TableColumn fx:id="startEducationColumn" editable="false" prefWidth="112.0" resizable="false" text="Поч.навчання" />
+                            </columns>
+                        </TableView>
+
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

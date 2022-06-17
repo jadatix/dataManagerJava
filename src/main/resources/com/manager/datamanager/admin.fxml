@@ -12,21 +12,34 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Button fx:id="TeacherEditBtn" layoutX="98.0" layoutY="105.0" mnemonicParsing="false" onAction="#adminChangeTeacher" prefHeight="38.0" prefWidth="161.0" text="Додати викладача">
+      <Button fx:id="TeacherEditBtn" layoutX="122.0" layoutY="165.0" mnemonicParsing="false" onAction="#adminChangeTeacher" prefHeight="47.0" prefWidth="117.0" text="Додати">
          <cursor>
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="StudentEditBtn" layoutX="98.0" layoutY="162.0" mnemonicParsing="false" onAction="#adminChangeStudent" prefHeight="38.0" prefWidth="161.0" text="Редагування студентів">
+      <Button fx:id="StudentEditBtn" layoutX="361.0" layoutY="165.0" mnemonicParsing="false" onAction="#adminChangeStudent" prefHeight="47.0" prefWidth="117.0" text="Додати">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="ExitBtn" layoutX="98.0" layoutY="266.0" mnemonicParsing="false" onAction="#exit" prefHeight="38.0" prefWidth="84.0" text="Вийти" textFill="#fc0a0a">
+      <Button fx:id="ExitBtn" layoutX="464.0" layoutY="325.0" mnemonicParsing="false" onAction="#exit" prefHeight="38.0" prefWidth="84.0" text="Вийти" textFill="#fc0a0a">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
       </Button>
-      <Button layoutX="280.0" layoutY="105.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="161.0" text="Переглянути дані" onAction="#adminShowTeacher" />
+      <Button layoutX="122.0" layoutY="255.0" mnemonicParsing="false" onAction="#adminShowTeacher" prefHeight="47.0" prefWidth="117.0" text="Переглянути">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="361.0" layoutY="255.0" mnemonicParsing="false" onAction="#adminShowStudent" prefHeight="47.0" prefWidth="117.0" text="Переглянути">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
+      <Separator disable="true" layoutX="300.0" layoutY="108.0" orientation="VERTICAL" prefHeight="240.0" prefWidth="2.0" />
+      <Label layoutX="122.0" layoutY="127.0" prefWidth="115.0" text="Викладачами" textAlignment="CENTER" />
+      <Label layoutX="361.0" layoutY="127.0" prefWidth="115.0" text="Студентами" textAlignment="CENTER" />
+      <Label layoutX="268.0" layoutY="92.0" prefHeight="16.0" prefWidth="64.0" text="Дії над:" textAlignment="CENTER" />
    </children>
 </AnchorPane>
