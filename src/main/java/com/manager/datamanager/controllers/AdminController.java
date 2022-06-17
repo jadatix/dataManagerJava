@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -47,10 +49,21 @@ public class AdminController {
 
 
 
-    public void exit(ActionEvent event){
+    public void logout(ActionEvent event) throws IOException {
         System.out.println("Вихід");
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Вихід");
+        alert.setHeaderText("Ви намагаєтеся вийти");
+        alert.setContentText("Впевнені, що хочете вийти?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            root = FXMLLoader.load(Main.class.getResource("login.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            System.out.println("Логаут");
+        }
     }
 
 
