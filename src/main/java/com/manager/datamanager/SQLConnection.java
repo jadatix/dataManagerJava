@@ -52,7 +52,7 @@ public class SQLConnection {
     public static void addTeacher(Teacher teacher) throws SQLException {
         Connection connection = init();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Teacher(id,name,lastname,email,password,gender,age,\"headOf\",subject)" +
+            String query = "INSERT INTO Teacher(id,name,lastname,email,password,gender,age,\"headOf\",subject)" +
                     "VALUES (nextval('teacher_id_seq'),'"+teacher.getName()+
                     "','"+teacher.getLastname()+
                     "','"+teacher.getEmail()+
@@ -61,7 +61,8 @@ public class SQLConnection {
                     "','"+teacher.getAge()+
                     "','"+teacher.getHeadOf()+
                     "','"+teacher.getSubject().stream().collect(Collectors.joining("|"))+
-                    "')");
+                    "')";
+            statement.executeUpdate(query);
     }
 
     public static List<Teacher> getAllTeachers(){
@@ -69,7 +70,8 @@ public class SQLConnection {
         List<Teacher> teachers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM teacher ORDER BY lastname;");
+            String query = "SELECT * FROM teacher ORDER BY lastname;";
+            ResultSet result = statement.executeQuery(query);
             while (result.next()){
                 List<String> subjects = Arrays.asList(result.getString("subject").split("[|]"));
                 teachers.add(new Teacher(
@@ -94,8 +96,9 @@ public class SQLConnection {
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM "+table+" WHERE name ='"+
-                    name+"' and lastname = '"+lastname+"';");
+            String query = "DELETE FROM "+table+" WHERE name ='"+
+                    name+"' and lastname = '"+lastname+"';";
+            statement.executeUpdate(query);
         }catch (SQLException err){
 
         }
@@ -105,14 +108,15 @@ public class SQLConnection {
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE teacher SET name='"+ teacher.getName() +"'," +
+            String query = "UPDATE teacher SET name='"+ teacher.getName() +"'," +
                     "lastname='"+teacher.getLastname()+"'," +
                     "email='"+teacher.getEmail()+"'," +
                     "gender='"+teacher.getGender() + "'," +
                     "age='"+teacher.getAge()+"'," +
                     "\"headOf\"='"+teacher.getHeadOf()+"'," +
                     "subject='"+teacher.getSubject().stream().collect(Collectors.joining("|"))+"'" +
-                    " WHERE name='"+name+"' and lastname='"+lastname+"';");
+                    " WHERE name='"+name+"' and lastname='"+lastname+"';";
+            statement.executeUpdate(query);
             return true;
         } catch (SQLException err){
             System.out.println(err.getMessage());
@@ -124,7 +128,7 @@ public class SQLConnection {
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO student(id, name, lastname, email, password, gender, age, \"groupNum\", \"durationOfEducation\", \"startEducation\")" +
+            String query = "INSERT INTO student(id, name, lastname, email, password, gender, age, \"groupNum\", \"durationOfEducation\", \"startEducation\")" +
                     "VALUES (nextval('student_id_seq'),'" + student.getName() +
                     "','" + student.getLastname() +
                     "','" + student.getEmail() +
@@ -134,7 +138,8 @@ public class SQLConnection {
                     "','" + student.getGroupNum() +
                     "','" + student.getDurationOfEducation() +
                     "','" + student.getStartEducation("yyyy-MM-dd") +
-                    "')");
+                    "')";
+            statement.executeUpdate(query);
         } catch (SQLException err) {
             System.out.println(err.getMessage());
             System.out.println(err.getStackTrace());
@@ -146,7 +151,8 @@ public class SQLConnection {
         List<Student> students = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM student ORDER BY lastname;");
+            String query = "SELECT * FROM student ORDER BY lastname;";
+            ResultSet result = statement.executeQuery(query);
             while (result.next()){
                 students.add(new Student(
                         result.getString("name"),
@@ -171,7 +177,7 @@ public class SQLConnection {
         Connection connection = init();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE student SET name='"+ student.getName() +"'," +
+            String query = "UPDATE student SET name='"+ student.getName() +"'," +
                     "lastname='"+ student.getLastname()+"'," +
                     "email='"+ student.getEmail()+"'," +
                     "gender='"+ student.getGender() + "'," +
@@ -179,7 +185,8 @@ public class SQLConnection {
                     "\"groupNum\"='"+ student.getGroupNum()+"'," +
                     "\"durationOfEducation\"='"+student.getDurationOfEducation()+"'," +
                     "\"startEducation\"='"+student.getStartEducation("yyyy-MM-dd")+"'" +
-                    " WHERE name='"+name+"' and lastname='"+lastname+"';");
+                    " WHERE name='"+name+"' and lastname='"+lastname+"';";
+            statement.executeUpdate(query);
             return true;
         } catch (SQLException err){
             System.out.println(err.getMessage());
